@@ -1,4 +1,13 @@
+# Slack Clone
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Table of Contents
+
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)  
+- [Scripts](#scripts)
+
 
 ## Getting Started
 
@@ -14,23 +23,51 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```plaintext
+.eslintrc.json  
+.gitignore  
+.next/  
+package.json  
+components.json  
+next-env.d.ts  
+next.config.mjs  
+postcss.config.mjs  
+README.md  
+src/  
+  app/  
+    components/  
+    features/  
+    lib/  
+tailwind.config.ts  
+tsconfig.json
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+.eslintrc.json: ESLint configuration file.  
+.gitignore: Specifies files to be ignored by Git.  
+.next/: Build output directory.  
+package.json: Project metadata and dependencies.  
+components.json: Configuration for UI components.  
+next-env.d.ts: TypeScript environment definitions for Next.js.  
+next.config.mjs: Next.js configuration file.  
+postcss.config.mjs: PostCSS configuration file.  
+README.md: Project documentation.  
+src/: Source code directory.  
+app/: Application-specific code.  
+components/: Reusable UI components.  
+features/: Feature-specific code.  
+lib/: Utility functions and libraries.  
+tailwind.config.ts: Tailwind CSS configuration file.  
+tsconfig.json: TypeScript configuration file. 
+```
 
-To learn more about Next.js, take a look at the following resources:
+You can start editing the page by modifying src/app/page.tsx. The page auto-updates as you edit the file.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Scripts
+```
+dev: Runs the development server.
+build: Builds the application for production.
+start: Starts the production server.
+lint: Runs ESLint to check for linting errors.
+```
