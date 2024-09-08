@@ -6,6 +6,8 @@ import { FaGithub } from "react-icons/fa"
 import { FcGoogle } from "react-icons/fc"
 import { SignInFlow } from "../types"
 import { useState } from "react"
+import { useAuthActions } from "@convex-dev/auth/react"
+import { TriangleAlert } from "lucide-react"
 
 interface SignInCardProps{
     setState: (state: SignInFlow) => void;
@@ -14,6 +16,21 @@ interface SignInCardProps{
 export const SignInCard = ({setState}: SignInCardProps)=>{
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [err, setErr] = useState("");
+    const {signIn} =  useAuthActions();
+
+    const handlePasswordSignIn = (e: React.FormEvent<HTMLFormElement>)=>{
+        e.preventDefault();
+        setIsLoading(true);
+        signIn("password", {email, password, flow:"signIn"})
+        .catch(()=> {setErr("something went wrong")})
+        .finally(()=>{setIsLoading(false)});
+    }
+    const handleProviderSignIn = (value: "google" | "github")=>{
+        setIsLoading(true);
+        signIn(value).finally(()=>setIsLoading(false));
+    }
 
     return (
         <Card className="h-full w-full p-8">
@@ -25,11 +42,16 @@ export const SignInCard = ({setState}: SignInCardProps)=>{
                     Use your email or another service to login
             </CardDescription>
             </CardHeader>
-            
+            {!!err &&(
+                <div className="bg-destructive/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-destructive mb-6">
+                    <TriangleAlert className="size-4"></TriangleAlert>
+                    <p>{err}</p>
+                </div>
+            )}
             <CardContent className="space-y-5 px-0 pb-0">
-                <form className="space-y-2.5">
+                <form className="space-y-2.5" onSubmit={handlePasswordSignIn}>
                     <Input
-                        disabled = {false}
+                        disabled = {isLoading}
                         value={email}
                         onChange={(e)=>{setEmail(e.target.value)}}
                         placeholder="Email"
@@ -38,14 +60,14 @@ export const SignInCard = ({setState}: SignInCardProps)=>{
                     ></Input>
 
                     <Input
-                        disabled = {false}
+                        disabled = {isLoading}
                         value={password}
                         onChange={(e)=>{setPassword(e.target.value)}}
                         placeholder="Password"
                         type="password"
                         required
                     ></Input>
-                    <Button size="lg" type="submit" className="w-full" disabled={false} >
+                    <Button size="lg" type="submit" className="w-full" disabled={isLoading} >
                         Continue
                     </Button>
                 </form> 
@@ -54,19 +76,19 @@ export const SignInCard = ({setState}: SignInCardProps)=>{
                     <Button
                         size="lg" 
                         type="submit" 
-                        onClick={()=>{}}
+                        onClick={()=>{handleProviderSignIn("google")}}
                         variant="outline"
                         className="w-full relative " 
-                        disabled={false} >
+                        disabled={isLoading} >
                         <FcGoogle className="size-5 absolute top-3 left-2.5"></FcGoogle>    Continue with Google
                     </Button>
                     <Button
                         size="lg" 
                         type="submit" 
-                        onClick={()=>{}}
+                        onClick={()=>{handleProviderSignIn("github")}}
                         variant="outline"
                         className="w-full relative " 
-                        disabled={false} >
+                        disabled={isLoading} >
                         <FaGithub className="size-5 absolute top-3 left-2.5"/>  Continue with Github
                         
                     </Button>
