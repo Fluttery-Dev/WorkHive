@@ -12,6 +12,8 @@ export const create = mutation({
     args: {name:v.string(), accessCode: v.string()},
     handler: async(ctx, args)=>{
         const userId = await getAuthUserId(ctx);
-        return await ctx.db.insert("Workspace", {accessCode : args.accessCode, name: args.name, userId: userId!});
+        const id = await ctx.db.insert("Workspace", {accessCode : args.accessCode, name: args.name, userId: userId!});
+        console.log(id as string)
+        return id as string
     }
 })
